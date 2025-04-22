@@ -1,0 +1,40 @@
+﻿@model IEnumerable<VeiculoModel>;
+
+<div>
+    <a class="btn btn-success" asp-controller="Aluno" asp-action="Criar">Adicionar usuario</a>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Placa</th>
+            <th scope="col">Marcar</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Ano</th>
+            <th scope="col">Cor</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Situação</th>
+            <th scope="col">ValorDiaria</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayFor(Model => item.Placa)</th>
+                <th scope="row">@Html.DisplayFor(Model => item.Marca)</th>
+                <th scope="row">@Html.DisplayFor(model => item.Modelo)</th>
+                <th scope="row">@Html.DisplayFor(Model => item.Ano)</th>
+                <th scope="row">@Html.DisplayFor(Model => item.Cor)</th>
+                <th scope="row">@Html.DisplayFor(Model => item.Categoria)</th>
+                <th scope="row">@Html.DisplayFor(Model => item.Situacao)</th>
+                <th scope="row">@Html.DisplayFor(Model => item.ValorDiaria)</th>
+                <th>
+                    <a class="btn btn-primary" asp-controller="Aluno" asp-action="Editar">Editar</a>
+                    <a class="btn btn-danger" asp-controller="Aluno" asp-action="Apagar">Apagar</a>
+                <th />
+            </tr>
+        }
+    </tbody>
+</table>

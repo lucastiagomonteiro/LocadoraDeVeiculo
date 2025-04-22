@@ -1,0 +1,50 @@
+﻿@model VeiculoModel;
+
+<div id="veiculo" class="tab-content">
+    <section>
+        <h2>Cadastro de Veículo</h2>
+        <form>
+            <div class="mb-3">
+                <label for="placa" class="form-label">Placa:</label>
+                <input type="text" class="form-control" id="placa" name="placa">
+            </div>
+            <div class="mb-3">
+                <label for="marca" class="form-label">Marca:</label>
+                <input type="text" class="form-control" id="marca" name="marca">
+            </div>
+            <div class="mb-3">
+                <label for="modelo" class="form-label">Modelo:</label>
+                <input type="text" class="form-control" id="modelo" name="modelo">
+            </div>
+            <div class="mb-3">
+                <label for="ano" class="form-label">Ano:</label>
+                <input type="number" class="form-control" id="ano" name="ano">
+            </div>
+            <div class="mb-3">
+                <label for="cor" class="form-label">Cor:</label>
+                <input type="text" class="form-control" id="cor" name="cor">
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoria:</label>
+                <select class="form-select" id="categoria" name="categoria">
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="hatch">Hatch</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="situacao" class="form-label">Situação:</label>
+                <select class="form-select" id="situacao" name="situacao">
+                    <option value="disponivel">Disponível</option>
+                    <option value="alugado">Alugado</option>
+                    <option value="manutencao">Em Manutenção</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="valor_diaria" class="form-label">Valor Diária:</label>
+                <input type="number" class="form-control" id="valor_diaria" name="valor_diaria" step="0.01">
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar Veículo</button>
+        </form>
+    </section>
+</div>

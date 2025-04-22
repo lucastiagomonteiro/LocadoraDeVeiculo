@@ -1,0 +1,64 @@
+﻿@model RegisterViewModel;
+
+<div class="container mt-5">
+    <h2 class="mb-4">Cadastro de Cliente</h2>
+    <form method="post" asp-controller="Account" asp-action="Registrar">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Nome">Nome</label>
+            <input type="text" class="form-control" placeholder="Digite seu nome" asp-for="Nome">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="CPF">CPF</label>
+            <input type="text" class="form-control" placeholder="Digite seu CPF" asp-for="CPF">
+            <span asp-validation-for="CPF" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="CNH">CNH</label>
+            <input type="text" class="form-control" placeholder="Digite sua CNH" asp-for="CNH">
+            <span asp-validation-for="CNH" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="DataNascimento">Data de Nascimento</label>
+            <input type="date" class="form-control" asp-for="DataNascimento">
+            <span asp-validation-for="DataNascimento" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Email">Email</label>
+            <input type="email" class="form-control" placeholder="Digite seu email" asp-for="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Telefone">Telefone</label>
+            <input type="text" class="form-control" placeholder="Digite seu telefone" asp-for="Telefone">
+            <span asp-validation-for="Telefone" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Endereco">Endereço</label>
+            <input type="text" class="form-control" placeholder="Digite seu endereço" asp-for="Endereco">
+            <span asp-validation-for="Endereco" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Senha">Senha</label>
+            <input type="password" class="form-control" placeholder="Digite sua senha" asp-for="Senha">
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="ConfirmarSenha">Confirmar Senha</label>
+            <input type="password" class="form-control" placeholder="Confirme sua senha" asp-for="ConfirmarSenha">
+            <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
