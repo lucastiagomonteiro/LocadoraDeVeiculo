@@ -1,0 +1,71 @@
+﻿@model LocadoraDeVeiculo.Models.VeiculoModel
+
+@{
+    ViewData["Title"] = "Cadastrar Veículo";
+}
+
+<h2>Cadastrar Veículo</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Placa" class="control-label"></label>
+        <input asp-for="Placa" class="form-control" />
+        <span asp-validation-for="Placa" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Marca" class="control-label"></label>
+        <input asp-for="Marca" class="form-control" />
+        <span asp-validation-for="Marca" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Modelo" class="control-label"></label>
+        <input asp-for="Modelo" class="form-control" />
+        <span asp-validation-for="Modelo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Ano" class="control-label"></label>
+        <input asp-for="Ano" class="form-control" type="number" />
+        <span asp-validation-for="Ano" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Cor" class="control-label"></label>
+        <input asp-for="Cor" class="form-control" />
+        <span asp-validation-for="Cor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Categoria" class="control-label"></label>
+        <input asp-for="Categoria" class="form-control" />
+        <span asp-validation-for="Categoria" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Situacao" class="control-label"></label>
+        <select asp-for="Situacao" class="form-control">
+            <option value="">Selecione</option>
+            <option>Disponível</option>
+            <option>Alugado</option>
+            <option>Manutenção</option>
+        </select>
+        <span asp-validation-for="Situacao" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ValorDiaria" class="control-label"></label>
+        <input asp-for="ValorDiaria" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="ValorDiaria" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

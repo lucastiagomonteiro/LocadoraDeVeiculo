@@ -6,31 +6,29 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace LocadoraDeVeiculo.Controllers
 {
-    public class VehicleController : Controller
+    public class VeiculoController : Controller
     {
-        private readonly VeiculoService _veiculoService;
-        public VehicleController(VeiculoService veiculoService)
+        private readonly IVeiculoService _veiculoService;
+
+        public VeiculoController(IVeiculoService veiculoService)
         {
             _veiculoService = veiculoService;
         }
 
-
-
-        
         public async Task<IActionResult> Index()
         {
-           var listaVeiculos = await _veiculoService.ListVehicles();
+            var listaVeiculos = await _veiculoService.ListVehicle();
             return View(listaVeiculos);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Criar()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(VeiculoModel model)
+        public async Task<IActionResult> Criar(VeiculoModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -38,9 +36,7 @@ namespace LocadoraDeVeiculo.Controllers
             }
 
             await _veiculoService.CreateVehicle(model);
-            return RedirectToAction("Index", "Vehicle");
+            return RedirectToAction("Index", "Veiculo");
         }
-
-
     }
 }

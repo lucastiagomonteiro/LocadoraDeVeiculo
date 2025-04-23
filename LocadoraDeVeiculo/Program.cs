@@ -15,15 +15,14 @@ builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new
-    MySqlServerVersion(new Version(8,0,3)))
+    MySqlServerVersion(new Version(8, 0, 3)))
 );
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
-    options.User.RequireUniqueEmail = true; 
+    options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
-
 
 var app = builder.Build();
 
@@ -60,6 +59,5 @@ async Task CriarPerfilsUsuarioAsync(WebApplication app)
         var seedService = scope.ServiceProvider.GetRequiredService<ISeedUserRoleInitial>();
         await seedService.SeedRoleAsync();
         await seedService.SeedUserRoleAsync(); ;
-
     }
 }
