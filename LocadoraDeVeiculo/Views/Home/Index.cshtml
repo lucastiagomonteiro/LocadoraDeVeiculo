@@ -10,15 +10,15 @@
 
         @foreach(var item in Model)
         {
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="@item.ImagemUrl" class="card-img-top" alt="Imagem veiculo">
+            <div class="col-md-3" >
+                <div class="card mb-2 shadow-sm">
+                    <img src="@item.ImagemUrl" class="card-img-top"  style="width: 100%; height: 150px; object-fit: cover;" alt="Imagem veiculo">
                     <div class="card-body">
                         <h5 class="card-title">@Html.DisplayFor(Model => item.Modelo)</h5>
                         <p class="card-text">@Html.DisplayFor(Model => item.Ano)</p>
                         <p class="card-text">@Html.DisplayFor(Model => item.Cor)</p>
                         <p class="card-text">@Html.DisplayFor(Model => item.Categoria)</p>
-                        <p class="card-text"><strong>@Html.DisplayFor(Model => item.ValorDiaria)</strong></p>
+                        <p class="card-text"><strong> R$ @Html.DisplayFor(Model => item.ValorDiaria)</strong></p>
                         <a href="#" class="btn btn-primary btn-block">Comprar / Alugar</a>
                     </div>
                 </div>
