@@ -14,8 +14,7 @@ builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new
-    MySqlServerVersion(new Version(8, 0, 3)))
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 3)))
 );
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -30,18 +29,17 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
+
 app.UseStaticFiles();
 
 await CriarPerfilsUsuarioAsync(app);
 
 app.UseRouting();
-
-app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllerRoute(

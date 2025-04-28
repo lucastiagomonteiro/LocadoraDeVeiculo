@@ -1,8 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<VeiculoModel>;
+
+@{
+    ViewData["Title"] = "Página Inicial";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Veículos Disponíveis</h2>
+    <div class="row">
+
+        @foreach(var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="@item.ImagemUrl" class="card-img-top" alt="Imagem veiculo">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(Model => item.Modelo)</h5>
+                        <p class="card-text">@Html.DisplayFor(Model => item.Ano)</p>
+                        <p class="card-text">@Html.DisplayFor(Model => item.Cor)</p>
+                        <p class="card-text">@Html.DisplayFor(Model => item.Categoria)</p>
+                        <p class="card-text"><strong>@Html.DisplayFor(Model => item.ValorDiaria)</strong></p>
+                        <a href="#" class="btn btn-primary btn-block">Comprar / Alugar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

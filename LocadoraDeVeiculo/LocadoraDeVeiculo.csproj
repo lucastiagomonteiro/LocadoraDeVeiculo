@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
+    <Content Remove="wwwroot\Imagens\19937330-f609-42ea-8901-1c2d8a937e3c.jpeg" />
+    <Content Remove="wwwroot\Imagens\728f2597-fea4-4334-a646-befa93706479.jpeg" />
+    <Content Remove="wwwroot\Imagens\a5f76d0f-52fc-4d94-8d67-2a6f450d3967.jpeg" />
+    <Content Remove="wwwroot\Imagens\c3b15fb3-3c60-4a09-97bb-16964ba46d36.jpeg" />
+    <Content Remove="wwwroot\Imagens\c54e4cf9-d9c8-4e56-9645-6c25b71967d6.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +28,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Imagens\" />
   </ItemGroup>
 
 </Project>

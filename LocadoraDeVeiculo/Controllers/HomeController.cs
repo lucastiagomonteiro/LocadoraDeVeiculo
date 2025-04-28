@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using LocadoraDeVeiculo.Models;
+using LocadoraDeVeiculo.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,17 +9,18 @@ namespace LocadoraDeVeiculo.Controllers
 {
     public class HomeController : Controller
     {
-      
-        public IActionResult Index()
+        private readonly IVeiculoService _veiculoService;
+        public HomeController(IVeiculoService veiculoService)
         {
-            return View();
+            _veiculoService = veiculoService;
         }
 
-        //[Authorize(Roles = "Admin,Funcionario")]
-        public IActionResult CreateVehicle()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var lista = await _veiculoService.ListVehicle();
+            return View(lista);
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

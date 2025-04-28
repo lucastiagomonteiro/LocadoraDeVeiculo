@@ -12,8 +12,28 @@ namespace LocadoraDeVeiculo.Service
         {
             _context = context;
         }
-        public async Task CreateVehicle(VeiculoModel model)
+        public async Task CreateVehicle(VeiculoModel model, IFormFile ImagemUpload)
         {
+            if (ImagemUpload != null && ImagemUpload.Length > 0)
+            {
+                var nomeImagem = Guid.NewGuid().ToString() + Path.GetExtension(ImagemUpload.FileName);
+                var caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens", nomeImagem);
+
+                var pastaImagens = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens");
+                if (!Directory.Exists(pastaImagens))
+                {
+                    Directory.CreateDirectory(pastaImagens);
+                }
+
+                using (var stream = new FileStream(caminhoImagem, FileMode.Create))
+                {
+                    await ImagemUpload.CopyToAsync(stream);
+                }
+
+                model.ImagemUrl = "/Imagens/" + nomeImagem;
+            }
+
+            
             await _context.Veiculos.AddAsync(model);
             await _context.SaveChangesAsync();
 
@@ -39,13 +59,9 @@ namespace LocadoraDeVeiculo.Service
                 Cor = x.Cor,
                 Categoria = x.Categoria,
                 Situacao = x.Situacao,
-                ValorDiaria = x.ValorDiaria
+                ValorDiaria = x.ValorDiaria,
+                ImagemUrl = x.ImagemUrl
             }).ToListAsync();
-        }
-
-        internal async Task<string?> ListVehicles()
-        {
-            throw new NotImplementedException();
         }
     }
 }
