@@ -6,7 +6,7 @@
 
 <h2>Cadastrar Veículo</h2>
 
-<form asp-controller="Veiculo" asp-action="Criar" method="post" enctype="multipart/form-data">
+<form asp-controller="Veiculo" asp-action="Criar" method="post" enctype="multipart/form-data" asp-route-id="id">
     <div class="form-group">
         <label asp-for="Placa" class="control-label"></label>
         <input asp-for="Placa" class="form-control" />
@@ -75,4 +75,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
- 

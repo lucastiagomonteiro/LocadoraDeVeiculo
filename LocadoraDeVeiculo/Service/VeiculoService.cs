@@ -12,7 +12,7 @@ namespace LocadoraDeVeiculo.Service
         {
             _context = context;
         }
-        public async Task CreateVehicle(VeiculoModel model, IFormFile ImagemUpload)
+        public async Task CreateVeiculo(VeiculoModel model, IFormFile ImagemUpload)
         {
             if (ImagemUpload != null && ImagemUpload.Length > 0)
             {
@@ -39,23 +39,34 @@ namespace LocadoraDeVeiculo.Service
 
         }
 
-        public Task DeleteVehicle(int id)
+        public async Task DeleteVeiculo(int id)
         {
-            throw new NotImplementedException();
+            var contatoId = await _context.Veiculos.FindAsync(id);
+            if (contatoId !=  null)
+            {
+                _context.Veiculos.Remove(contatoId);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task EditarVehicle(int id)
+        public async Task EditarVeiculo(int id)
         {
-            throw new NotImplementedException();
+            var contatoId = await _context.Veiculos.FindAsync(id);
+            if (contatoId != null)
+            {
+                _context.Veiculos.Update(contatoId);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public async Task<List<VeiculoModel>> ListVehicle()
+        public async Task<List<VeiculoModel>> ListVeiculo()
         {
             return await _context.Veiculos.Select(x => new VeiculoModel
             {
                 Placa = x.Placa,
                 Marca = x.Marca,
                 Modelo = x.Modelo,
+                Ano = x.Ano,
                 Cor = x.Cor,
                 Categoria = x.Categoria,
                 Situacao = x.Situacao,

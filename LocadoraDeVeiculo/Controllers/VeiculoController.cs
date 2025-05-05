@@ -19,7 +19,7 @@ namespace LocadoraDeVeiculo.Controllers
         [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Index()
         {
-            var listaVeiculos = await _veiculoService.ListVehicle();
+            var listaVeiculos = await _veiculoService.ListVeiculo();
             return View(listaVeiculos);
         }
 
@@ -39,8 +39,28 @@ namespace LocadoraDeVeiculo.Controllers
                 return View(model);
             }
 
-            await _veiculoService.CreateVehicle(model, ImagemUpload);
+            await _veiculoService.CreateVeiculo(model, ImagemUpload);
             return RedirectToAction("Index", "Veiculo");
+        }
+
+        [Authorize(Roles = "Admin, Employee")]
+        [HttpGet]
+        public async Task<IActionResult> Editar()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(int id)
+        {
+            if(ModelState.IsValid)
+            {
+                await _veiculoService.EditarVeiculo(id);
+                return RedirectToAction(nameof(Index));
+            }
+            
+            return NotFound();
         }
     }
 }

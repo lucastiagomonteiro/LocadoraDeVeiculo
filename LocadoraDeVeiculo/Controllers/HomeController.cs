@@ -17,7 +17,7 @@ namespace LocadoraDeVeiculo.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var lista = await _veiculoService.ListVehicle();
+            var lista = await _veiculoService.ListVeiculo();
             return View(lista);
         }
 

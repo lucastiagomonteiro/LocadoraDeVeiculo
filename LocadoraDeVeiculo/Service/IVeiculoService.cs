@@ -4,9 +4,9 @@ namespace LocadoraDeVeiculo.Service
 {
     public interface IVeiculoService
     {
-        Task<List<VeiculoModel>> ListVehicle();
-        Task CreateVehicle(VeiculoModel model, IFormFile ImagemUpload);
-        Task DeleteVehicle(int id);
-        Task EditarVehicle(int id);
+        Task<List<VeiculoModel>> ListVeiculo();
+        Task CreateVeiculo(VeiculoModel model, IFormFile ImagemUpload);
+        Task DeleteVeiculo(int id);
+        Task EditarVeiculo(int id);
     }
 }
