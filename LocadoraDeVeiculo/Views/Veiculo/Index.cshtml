@@ -36,8 +36,8 @@
                 </th>
 
                 <th>
-                    <a class="btn btn-primary" asp-controller="Aluno" asp-action="Editar">Editar</a>
-                    <a class="btn btn-danger" asp-controller="Aluno" asp-action="Apagar">Apagar</a>
+                    <a class="btn btn-primary" asp-controller="Veiculo" asp-action="Editar" asp-route-id="@item.id">Editar</a>
+                    <a class="btn btn-danger" asp-controller="Veiculo" asp-action="Apagar" asp-route-id="@item.id">Apagar</a>
                 <th />
             </tr>
         }

@@ -45,14 +45,20 @@ namespace LocadoraDeVeiculo.Controllers
 
         [Authorize(Roles = "Admin, Employee")]
         [HttpGet]
-        public async Task<IActionResult> Editar()
+        public async Task<IActionResult> Editar(int id)
         {
-            return View();
+            var pegandoId = await _veiculoService.BuscarPorId(id);
+
+            if (pegandoId == null)
+            {
+                return NotFound();
+            }
+
+            return View(pegandoId);
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> Editar(int id)
+        public async Task<IActionResult> Editar(int id, VeiculoModel model)
         {
             if(ModelState.IsValid)
             {

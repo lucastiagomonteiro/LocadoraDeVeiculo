@@ -1,12 +1,12 @@
 ﻿@model LocadoraDeVeiculo.Models.VeiculoModel
 
 @{
-    ViewData["Title"] = "Cadastrar Veículo";
+    ViewData["Title"] = "Editar cadastro de Veículo";
 }
 
 <h2>Cadastrar Veículo</h2>
 
-<form asp-controller="Veiculo" asp-action="Criar" method="post" enctype="multipart/form-data" asp-route-id="id">
+<form asp-controller="Veiculo" asp-action="Editar" method="post" enctype="multipart/form-data" asp-route-id="@Model.id">
     <div class="form-group">
         <label asp-for="Placa" class="control-label"></label>
         <input asp-for="Placa" class="form-control" />

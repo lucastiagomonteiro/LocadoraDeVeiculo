@@ -12,6 +12,12 @@ namespace LocadoraDeVeiculo.Service
         {
             _context = context;
         }
+
+        public async Task<VeiculoModel> BuscarPorId(int id)
+        {
+           return await _context.Veiculos.FirstOrDefaultAsync(v => v.id == id);
+        }
+
         public async Task CreateVeiculo(VeiculoModel model, IFormFile ImagemUpload)
         {
             if (ImagemUpload != null && ImagemUpload.Length > 0)
