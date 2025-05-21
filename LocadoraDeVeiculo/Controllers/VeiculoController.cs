@@ -62,7 +62,7 @@ namespace LocadoraDeVeiculo.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _veiculoService.EditarVeiculo(id);
+                await _veiculoService.EditarVeiculo(id, model);
                 return RedirectToAction(nameof(Index));
             }
             

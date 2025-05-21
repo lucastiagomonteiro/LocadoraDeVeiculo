@@ -1,6 +1,7 @@
 ﻿using LocadoraDeVeiculo.Context;
 using LocadoraDeVeiculo.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LocadoraDeVeiculo.Service
 {
@@ -55,12 +56,24 @@ namespace LocadoraDeVeiculo.Service
             }
         }
 
-        public async Task EditarVeiculo(int id)
+        public async Task EditarVeiculo(int id, VeiculoModel model)
         {
-            var contatoId = await _context.Veiculos.FindAsync(id);
-            if (contatoId != null)
+            var veiculoExistente = await _context.Veiculos.FindAsync(id);
+            if (veiculoExistente != null)
             {
-                _context.Veiculos.Update(contatoId);
+                // Atualiza os campos normais
+                veiculoExistente.Placa = model.Placa;
+                veiculoExistente.Marca = model.Marca;
+                veiculoExistente.Modelo = model.Modelo;
+                veiculoExistente.Ano = model.Ano;
+                veiculoExistente.Cor = model.Cor;
+                veiculoExistente.Categoria = model.Categoria;
+                veiculoExistente.Situacao = model.Situacao;
+                veiculoExistente.ValorDiaria = model.ValorDiaria;
+
+                //adicionar aqui o motedo de adicionar imagem de veiculo........
+
+                _context.Veiculos.Update(veiculoExistente);
                 await _context.SaveChangesAsync();
             }
         }
@@ -69,6 +82,7 @@ namespace LocadoraDeVeiculo.Service
         {
             return await _context.Veiculos.Select(x => new VeiculoModel
             {
+                id = x.id,
                 Placa = x.Placa,
                 Marca = x.Marca,
                 Modelo = x.Modelo,
