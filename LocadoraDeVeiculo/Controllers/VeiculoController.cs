@@ -39,7 +39,7 @@ namespace LocadoraDeVeiculo.Controllers
                 return View(model);
             }
 
-            await _veiculoService.CreateVeiculo(model, ImagemUpload);
+            await _veiculoService.CriarVeiculo(model, ImagemUpload);
             return RedirectToAction("Index", "Veiculo");
         }
 
@@ -58,11 +58,11 @@ namespace LocadoraDeVeiculo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(int id, VeiculoModel model)
+        public async Task<IActionResult> Editar(int id, VeiculoModel model, IFormFile ImagemUpload)
         {
             if(ModelState.IsValid)
             {
-                await _veiculoService.EditarVeiculo(id, model);
+                await _veiculoService.EditarVeiculo(id, model, ImagemUpload);
                 return RedirectToAction(nameof(Index));
             }
             

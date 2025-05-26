@@ -1,5 +1,6 @@
 ﻿using LocadoraDeVeiculo.Context;
 using LocadoraDeVeiculo.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -16,37 +17,19 @@ namespace LocadoraDeVeiculo.Service
 
         public async Task<VeiculoModel> BuscarPorId(int id)
         {
-           return await _context.Veiculos.FirstOrDefaultAsync(v => v.id == id);
+            return await _context.Veiculos.FirstOrDefaultAsync(v => v.id == id);
         }
 
-        public async Task CreateVeiculo(VeiculoModel model, IFormFile ImagemUpload)
-        {
-            if (ImagemUpload != null && ImagemUpload.Length > 0)
-            {
-                var nomeImagem = Guid.NewGuid().ToString() + Path.GetExtension(ImagemUpload.FileName);
-                var caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens", nomeImagem);
+        public async Task CriarVeiculo(VeiculoModel model, IFormFile ImagemUpload)
+        {   
 
-                var pastaImagens = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens");
-                if (!Directory.Exists(pastaImagens))
-                {
-                    Directory.CreateDirectory(pastaImagens);
-                }
-
-                using (var stream = new FileStream(caminhoImagem, FileMode.Create))
-                {
-                    await ImagemUpload.CopyToAsync(stream);
-                }
-
-                model.ImagemUrl = "/Imagens/" + nomeImagem;
-            }
-
-            
+            model.ImagemUrl = await AddImagemVeiculo(model, ImagemUpload);
             await _context.Veiculos.AddAsync(model);
             await _context.SaveChangesAsync();
 
         }
 
-        public async Task DeleteVeiculo(int id)
+        public async Task ApagarVeiculo(int id)
         {
             var contatoId = await _context.Veiculos.FindAsync(id);
             if (contatoId !=  null)
@@ -56,7 +39,7 @@ namespace LocadoraDeVeiculo.Service
             }
         }
 
-        public async Task EditarVeiculo(int id, VeiculoModel model)
+        public async Task EditarVeiculo(int id, VeiculoModel model, IFormFile ImagemUpload)
         {
             var veiculoExistente = await _context.Veiculos.FindAsync(id);
             if (veiculoExistente != null)
@@ -71,7 +54,10 @@ namespace LocadoraDeVeiculo.Service
                 veiculoExistente.Situacao = model.Situacao;
                 veiculoExistente.ValorDiaria = model.ValorDiaria;
 
-                //adicionar aqui o motedo de adicionar imagem de veiculo........
+                if(ImagemUpload != null && ImagemUpload.Length > 0)
+                {
+                    veiculoExistente.ImagemUrl = await AddImagemVeiculo(model, ImagemUpload);              
+                }
 
                 _context.Veiculos.Update(veiculoExistente);
                 await _context.SaveChangesAsync();
@@ -93,6 +79,30 @@ namespace LocadoraDeVeiculo.Service
                 ValorDiaria = x.ValorDiaria,
                 ImagemUrl = x.ImagemUrl
             }).ToListAsync();
+        }
+
+        public async Task<string> AddImagemVeiculo(VeiculoModel model, IFormFile ImagemUpload)
+        {
+            if (ImagemUpload != null && ImagemUpload.Length > 0)
+            {
+                var nomeImagem = Guid.NewGuid().ToString() + Path.GetExtension(ImagemUpload.FileName);
+                var caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens", nomeImagem);
+
+                var pastaImagens = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens");
+                if (!Directory.Exists(pastaImagens))
+                {
+                    Directory.CreateDirectory(pastaImagens);
+                }
+
+                using (var stream = new FileStream(caminhoImagem, FileMode.Create))
+                {
+                    await ImagemUpload.CopyToAsync(stream);
+                }
+
+                return "/Imagens/" + nomeImagem;
+            }
+
+            return null;
         }
     }
 }
