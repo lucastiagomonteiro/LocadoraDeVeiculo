@@ -19,7 +19,7 @@
                         <p class="card-text">@Html.DisplayFor(Model => item.Cor)</p>
                         <p class="card-text">@Html.DisplayFor(Model => item.Categoria)</p>
                         <p class="card-text"><strong> R$ @Html.DisplayFor(Model => item.ValorDiaria)</strong></p>
-                        <a href="#" class="btn btn-primary btn-block">Comprar / Alugar</a>
+                        <a class="btn btn-primary btn-block" asp-controller="Veiculo" asp-action="Alugar" asp-route-id="@item.id">Alugar</a>
                     </div>
                 </div>
             </div>

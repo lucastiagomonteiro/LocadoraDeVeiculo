@@ -1,0 +1,118 @@
+﻿/* Container principal que centraliza e dá altura */
+.alugar-container {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    height: 70vh;
+    align-items: center;
+}
+
+/* Card do veículo */
+.alugar-card {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    width: 100%;
+    height: 90%;
+}
+
+/* Container da imagem do veículo */
+.alugar-imagem {
+    flex-shrink: 0;
+    width: 700px;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Linha vertical entre imagem e descrição */
+.alugar-linha-vertical {
+    width: 2px;
+    background-color: #ddd;
+}
+
+/* Container das informações do veículo */
+.alugar-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 20px;
+}
+
+    /* Remove margem dos parágrafos e títulos */
+    .alugar-info h3,
+    .alugar-info p {
+        margin: 0;
+    }
+
+    /* Botão "Alugar" ajustado */
+    .alugar-info a.btn {
+        width: 90%;
+    }
+
+/* Botão Favoritar */
+.alugar-topbar button {
+    border: none;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* RESPONSIVIDADE - para telas menores que 992px */
+@media (max-width: 991.98px) {
+    .alugar-card {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+
+    .alugar-imagem {
+        width: 100%;
+        height: 300px; /* altura fixa para não ficar muito alto */
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .alugar-linha-vertical {
+        width: 100%;
+        height: 2px;
+        margin: 10px 0;
+        background-color: #ddd;
+    }
+
+    .alugar-info {
+        padding-left: 0;
+        gap: 10px;
+    }
+
+        .alugar-info a.btn {
+            width: 100%;
+        }
+}
+
+/* Para telas muito pequenas (ex: mobile) */
+@media (max-width: 575.98px) {
+    .alugar-info h3 {
+        font-size: 1.25rem;
+    }
+
+    .alugar-info p {
+        font-size: 0.9rem;
+    }
+
+    .alugar-topbar {
+        padding: 5px;
+    }
+
+        .alugar-topbar a,
+        .alugar-topbar button {
+            font-size: 14px;
+        }
+}
