@@ -68,5 +68,18 @@ namespace LocadoraDeVeiculo.Controllers
             
             return NotFound();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Apagar(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                await _veiculoService.ApagarVeiculo(id);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return NotFound();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model VeiculoModel;
+
+<form asp-controller="Veiculo" asp-action="Apagar" method="post">
+    <p>Tem certeza que deseja apagar esse cadastro?</p>
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja apagar esse cadastro?')">Confirmar</button>
+</form>

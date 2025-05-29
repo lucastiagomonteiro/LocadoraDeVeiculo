@@ -37,7 +37,10 @@
 
                 <th>
                     <a class="btn btn-primary" asp-controller="Veiculo" asp-action="Editar" asp-route-id="@item.id">Editar</a>
-                    <a class="btn btn-danger" asp-controller="Veiculo" asp-action="Apagar" asp-route-id="@item.id">Apagar</a>
+                    <form method="post" asp-controller="veiculo" asp-action="Apagar" style="display:inline;">
+                        <button class="btn btn-danger" asp-controller="Veiculo" asp-action="Apagar" asp-route-id="@item.id" onclick="return confirm('Tem certeza que deseja apagar esse cadastro?')">Apagar</button>
+                    </form>
+                    
                 <th />
             </tr>
         }
