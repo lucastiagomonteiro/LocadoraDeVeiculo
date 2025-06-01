@@ -1,0 +1,21 @@
+﻿@model ReservaModel;
+
+<h2>Reservar Veículo</h2>
+
+<form asp-controller="Reserva" asp-action="Cadastrar" method="post">
+    <input type="hidden" asp-for="PlacaVeiculo" />
+    
+    <div class="form-group">
+        <label asp-for="DataInicio"></label>
+        <input asp-for="DataInicio" class="form-control" type="date" />
+        <span asp-validation-for="DataInicio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataFim"></label>
+        <input asp-for="DataFim" class="form-control" type="date" />
+        <span asp-validation-for="DataFim" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+</form>

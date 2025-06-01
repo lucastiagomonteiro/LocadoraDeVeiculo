@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
+    <Content Remove="Views\Veiculo\Alugar.cshtml" />
     <Content Remove="Views\Veiculo\Apagar.cshtml" />
     <Content Remove="wwwroot\Imagens\19937330-f609-42ea-8901-1c2d8a937e3c.jpeg" />
     <Content Remove="wwwroot\Imagens\728f2597-fea4-4334-a646-befa93706479.jpeg" />

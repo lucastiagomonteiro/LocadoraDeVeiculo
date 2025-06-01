@@ -43,7 +43,7 @@ namespace LocadoraDeVeiculo.Controllers
 
                 var user = new IdentityUser
                 {
-                    UserName = model.Email,
+                    UserName = model.CPF,
                     Email = model.Email
                 };
 
