@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeVeiculo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250420135436_AtualizaClienteOuOutros")]
-    partial class AtualizaClienteOuOutros
+    [Migration("20250709133835_CriarTabelasDoZero")]
+    partial class CriarTabelasDoZero
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,84 @@ namespace LocadoraDeVeiculo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("LocadoraDeVeiculo.Models.ReservaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("IdVeiculo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserNameUsuario")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reservas");
+                });
+
+            modelBuilder.Entity("LocadoraDeVeiculo.Models.VeiculoModel", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("Ano")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Cor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagemUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Marca")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Modelo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Placa")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Situacao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("ValorDiaria")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Veiculos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

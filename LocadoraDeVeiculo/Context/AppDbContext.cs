@@ -12,5 +12,7 @@ namespace LocadoraDeVeiculo.Context
         public DbSet<Models.ClienteModels> Clientes { get; set; }
 
         public DbSet<Models.VeiculoModel> Veiculos { get; set; }
+
+        public DbSet<Models.ReservaModel> Reservas { get; set; }
     }
 }

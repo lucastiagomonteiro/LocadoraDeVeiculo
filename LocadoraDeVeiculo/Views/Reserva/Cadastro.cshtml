@@ -2,9 +2,9 @@
 
 <h2>Reservar Veículo</h2>
 
-<form asp-controller="Reserva" asp-action="Cadastrar" method="post">
-    <input type="hidden" asp-for="PlacaVeiculo" />
-    
+<form asp-controller="Reserva" asp-action="Cadastro" method="post" onclick="@ViewBag.Text">
+    <input type="hidden" asp-for="IdVeiculo"/>
+
     <div class="form-group">
         <label asp-for="DataInicio"></label>
         <input asp-for="DataInicio" class="form-control" type="date" />
@@ -17,5 +17,15 @@
         <span asp-validation-for="DataFim" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div>
+            <div>
+                <p class="text-danger">@TempData["MensagemErro"]</p>
+            </div>
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary" >Confirmar Reserva</button>
 </form>
+

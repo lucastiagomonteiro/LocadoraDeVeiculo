@@ -1,11 +1,12 @@
 ﻿using System.Security.Claims;
+using LocadoraDeVeiculo.Dto;
 using LocadoraDeVeiculo.Models;
 
 namespace LocadoraDeVeiculo.Service
 {
     public interface IReservaService
     {
-        Task CadastrarReserva(ReservaModel reservaModel, int id, ClaimsPrincipal userPrincipal);
-        List<ReservaModel> HistoricoReserva(ReservaModel model);
+        Task<bool> CadastrarReserva(ReservaModel reservaModel, ClaimsPrincipal userPrincipal);
+        List<ReservaModelDTO> HistoricoReserva(string userName);
     }
 }

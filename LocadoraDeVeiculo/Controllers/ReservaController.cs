@@ -11,7 +11,7 @@ namespace LocadoraDeVeiculo.Controllers
         private readonly IVeiculoService _veiculoService;
         private readonly IReservaService _reservaService;
 
-        public ReservaController(IVeiculoService veiculoService, ReservaService reservaService)
+        public ReservaController(IVeiculoService veiculoService, IReservaService reservaService)
         {
             _veiculoService = veiculoService;
             _reservaService = reservaService;
@@ -30,17 +30,37 @@ namespace LocadoraDeVeiculo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Cadastro()
+        public IActionResult Cadastro(int id)
         {
-            return View();
+            var reserva = new ReservaModel
+            {
+                IdVeiculo = id
+            };
+
+            return View(reserva);
         }
+
 
         [HttpPost]
-        public async Task<IActionResult> Cadastro(ReservaModel reservaModel, int id, ClaimsPrincipal userPrincipal)
+        public async Task<IActionResult> Cadastro(ReservaModel reservaModel)
         {
-            var reserva = _reservaService.CadastrarReserva(reservaModel, id, userPrincipal);
+            bool result = await _reservaService.CadastrarReserva(reservaModel,User);
+            if (result == false)
+            {
+                TempData["MensagemErro"] = "Veículo não encontrado ou usuário inválido.";
+                return View(); //de uma olhada, ser vai ser so na view, ou vai para tela de login para efetuar o login 
+            }
 
-            return View();
+            return RedirectToAction(nameof(Index), new { id = reservaModel.IdVeiculo });
         }
+
+        [HttpGet]
+        public IActionResult Historico()
+        {
+            var userName = User.Identity.Name;
+            var historico = _reservaService.HistoricoReserva(userName);
+            return View(historico);
+        }
+
     }
 }

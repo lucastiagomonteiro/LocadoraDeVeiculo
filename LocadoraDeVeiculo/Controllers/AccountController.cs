@@ -43,7 +43,7 @@ namespace LocadoraDeVeiculo.Controllers
 
                 var user = new IdentityUser
                 {
-                    UserName = model.CPF,
+                    UserName = model.Email,
                     Email = model.Email
                 };
 
@@ -92,11 +92,11 @@ namespace LocadoraDeVeiculo.Controllers
 
                 if(user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Usuário ou senha inválidos.");
+                    ModelState.AddModelError(string.Empty, "Usuário");
                     return View(model);
-                }
+                } 
 
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
                 {

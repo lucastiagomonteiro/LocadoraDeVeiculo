@@ -66,6 +66,38 @@ namespace LocadoraDeVeiculo.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("LocadoraDeVeiculo.Models.ReservaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("IdVeiculo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserNameUsuario")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reservas");
+                });
+
             modelBuilder.Entity("LocadoraDeVeiculo.Models.VeiculoModel", b =>
                 {
                     b.Property<int>("id")

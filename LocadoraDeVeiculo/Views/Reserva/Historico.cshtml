@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LocadoraDeVeiculo.Dto.ReservaModelDTO> 
+
+
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 20px;
+        }
+
+        .historico-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .historico-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        }
+
+        .reserva-card {
+        background-color: #e9f0f5;
+        border-left: 6px solid #007BFF;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease;
+        }
+
+        .reserva-card:hover {
+        transform: scale(1.02);
+        }
+
+        .reserva-card h3 {
+        margin-top: 0;
+        color: #007BFF;
+        }
+
+        .reserva-card p {
+        margin: 5px 0;
+        color: #444;
+        }
+    </style>
+<body>
+    <div class="historico-container">
+        <h2>Histórico de Reservas</h2>
+
+        @foreach (var item in Model)
+        {
+            <div class="reserva-card">
+                <h3>@item.NomeVeiculo</h3>
+                <p><strong>Data de Início:</strong> @item.DataInicio</p>
+                <p><strong>Data de Fim:</strong> @item.DataFim</p>
+                <p><strong>Dias Reservados:</strong> @item.DiasReservados</p>
+                <p><strong>Valor Total:</strong> R$ @item.ValorTotal</p>
+            </div>
+        }
+    </div>
+</body>
