@@ -29,7 +29,7 @@ namespace LocadoraDeVeiculo.Service
             }
 
             reservaModel.Id = 0;
-            reservaModel.NomeVeiculo = veiculo.Modelo;
+            reservaModel.NomeVeiculo = veiculo.Marca + veiculo.Modelo;
             reservaModel.UserNameUsuario = usuario.UserName;
             reservaModel.Ativo = true;
             reservaModel.DiasReservados = (reservaModel.DataFim - reservaModel.DataInicio).Days;
