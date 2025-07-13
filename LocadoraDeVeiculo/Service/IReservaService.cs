@@ -6,7 +6,8 @@ namespace LocadoraDeVeiculo.Service
 {
     public interface IReservaService
     {
-        Task<bool> CadastrarReserva(ReservaModel reservaModel, ClaimsPrincipal userPrincipal);
+        Task<ResultadoOperacaoDTO> CadastrarReserva(ReservaModel reservaModel, ClaimsPrincipal userPrincipal);
         List<ReservaModelDTO> HistoricoReserva(string userName);
+        Task DesativandoReservasVencidas();
     }
 }

@@ -18,8 +18,10 @@ namespace LocadoraDeVeiculo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
+
+            await _reservaService.DesativandoReservasVencidas();
             var pegandoId = _veiculoService.BuscarPorId(id).Result;
             if (pegandoId == null)
             {
@@ -28,7 +30,6 @@ namespace LocadoraDeVeiculo.Controllers
 
             return View(pegandoId);
         }
-
         [HttpGet]
         public IActionResult Cadastro(int id)
         {
@@ -44,13 +45,14 @@ namespace LocadoraDeVeiculo.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastro(ReservaModel reservaModel)
         {
-            bool result = await _reservaService.CadastrarReserva(reservaModel,User);
-            if (result == false)
+            var resultado = await _reservaService.CadastrarReserva(reservaModel,User);
+            if (resultado.Sucesso == false)
             {
-                TempData["MensagemErro"] = "Veículo não encontrado ou usuário inválido.";
+                TempData["MensagemErro"] = resultado.Mensagem;
                 return View(); //de uma olhada, ser vai ser so na view, ou vai para tela de login para efetuar o login 
             }
 
+            TempData["messagemSucesso"] = resultado.Mensagem;
             return RedirectToAction(nameof(Index), new { id = reservaModel.IdVeiculo });
         }
 

@@ -18,7 +18,7 @@ namespace LocadoraDeVeiculo.Models
         public int DiasReservados { get; set; }
         public decimal ValorTotal { get; set; }
         public bool Ativo { get; set; }
-       
-    }
 
+        public string resultado = string.Empty;
+    }
 }
