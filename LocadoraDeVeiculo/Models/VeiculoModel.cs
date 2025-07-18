@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LocadoraDeVeiculo.Models
 {
@@ -29,7 +30,10 @@ namespace LocadoraDeVeiculo.Models
 
         [Range(0, double.MaxValue, ErrorMessage = "O valor da diária não pode ser negativo.")]
         public decimal ValorDiaria { get; set; }
-
         public string? ImagemUrl { get; set; }
+
+        [NotMapped]
+        public DateTime DataFinalAluguel { get; set; }
+
     }
 }

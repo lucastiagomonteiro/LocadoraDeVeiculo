@@ -1,32 +1,87 @@
-﻿@model ReservaModel;
+﻿@model ReservaModel
 
-<h2>Reservar Veículo</h2>
+<div class="container">
+    <h2 class="text-center mb-4">Reservar Veículo</h2>
 
-<form asp-controller="Reserva" asp-action="Cadastro" method="post" onclick="@ViewBag.Text">
-    <input type="hidden" asp-for="IdVeiculo"/>
+    <form asp-controller="Reserva" asp-action="Cadastro" method="post">
+        <input type="hidden" asp-for="IdVeiculo" />
 
-    <div class="form-group">
-        <label asp-for="DataInicio"> </label>
-        <input asp-for="DataInicio" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-        <span asp-validation-for="DataInicio" class="text-danger"></span>
-
-    </div>
-
-    <div class="form-group">
-        <label asp-for="DataFim"></label>
-        <input asp-for="DataFim" class="form-control" type="date" />
-        <span asp-validation-for="DataFim" class="text-danger"></span>
-    </div>
-
-    @if (TempData["MensagemErro"] != null)
-    {
-        <div>
-            <div>
-                <p class="text-danger">@TempData["MensagemErro"]</p>
-            </div>
+        <div class="form-group mb-3">
+            <label asp-for="DataInicio"></label>
+            <input asp-for="DataInicio" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="DataInicio" class="text-danger"></span>
         </div>
-    }
 
-    <button type="submit" class="btn btn-primary" >Confirmar Reserva</button>
-</form>
+        <div class="form-group mb-3">
+            <label asp-for="DataFim"></label>
+            <input asp-for="DataFim" class="form-control" type="date" />
+            <span asp-validation-for="DataFim" class="text-danger"></span>
+        </div>
 
+        @if (TempData["MensagemErro"] != null)
+        {
+            <div class="alert alert-danger text-center">
+                @TempData["MensagemErro"]
+            </div>
+        }
+
+        <div class="form-footer mt-4">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+        </div>
+    </form>
+</div>
+
+<style>
+
+.container {
+    background-color: #1c3758;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    margin: 60px auto 40px auto;
+}
+
+/* Rodapé do formulário */
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Botão primário */
+.btn-primary {
+    background-color: #2a4467;
+    border-color: #2a4467;
+    font-size: 1rem;
+    padding: 8px 20px;
+    white-space: nowrap;
+}
+
+/* Botão secundário (cancelar) */
+.btn-outline-light {
+    border: 1px solid #cbd6e2;
+    color: #cbd6e2;
+    padding: 6px 12px;
+    white-space: nowrap;
+}
+
+.btn-outline-light:hover {
+    background-color: #36557e;
+    color: white;
+    border-color: #36557e;
+}
+
+/* Botão largo (se quiser usar no futuro) */
+.btn-block {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.1rem;
+}
+
+
+</style>

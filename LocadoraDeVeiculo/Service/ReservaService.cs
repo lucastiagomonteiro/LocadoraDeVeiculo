@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Security.Cryptography;
 using LocadoraDeVeiculo.Context;
 using LocadoraDeVeiculo.Dto;
 using LocadoraDeVeiculo.Models;
@@ -24,34 +25,21 @@ namespace LocadoraDeVeiculo.Service
         {
             var veiculo = await _context.Veiculos.FindAsync(reservaModel.IdVeiculo);
             var usuario = await _user.GetUserAsync(userPrincipal);
-            
 
-            if (veiculo == null || usuario == null)
+            try
+            {
+                ValidarCadastro(veiculo, usuario, reservaModel);
+            }
+            catch (Exception ex)
             {
                 return new ResultadoOperacaoDTO
                 {
                     Sucesso = false,
-                    Mensagem = "Veículo não encontrado ou usuário inválido."
-                };
-            }
-            
-            if (veiculo.Situacao == "Alugado")
-            {
-                return new ResultadoOperacaoDTO
-                {
-                    Sucesso = false,
-                    Mensagem = "Veículo Indisponível!"
+                    Mensagem = ex.Message
                 };
             }
 
-            reservaModel.Id = 0;
-            reservaModel.NomeVeiculo = veiculo.Marca + " - " + veiculo.Modelo;
-            reservaModel.UserNameUsuario = usuario.UserName;
-            reservaModel.Ativo = true;
-            reservaModel.DiasReservados = (reservaModel.DataFim - reservaModel.DataInicio).Days;
-            reservaModel.ValorTotal = reservaModel.DiasReservados * veiculo.ValorDiaria;
-
-            veiculo.Situacao = "Alugado";
+            CriarCadastro(reservaModel, veiculo, usuario);
 
             await _context.Reservas.AddAsync(reservaModel);
             await _context.SaveChangesAsync();
@@ -62,7 +50,6 @@ namespace LocadoraDeVeiculo.Service
                 Mensagem = "Reserva realizada com sucesso!"
             };
         }
-
 
         public List<ReservaModelDTO> HistoricoReserva(string userName)
         {
@@ -97,9 +84,35 @@ namespace LocadoraDeVeiculo.Service
                         veiculo.Situacao = "Disponível";
                     }
                 }
-
-                await _context.SaveChangesAsync();
             }
+
+            await _context.SaveChangesAsync();
+        }
+
+        private void ValidarCadastro(VeiculoModel veiculo, IdentityUser usuario, ReservaModel reservaModel)
+        {
+            if (veiculo == null || usuario == null)
+                throw new Exception("Veículo não encontrado ou usuário inválido.");
+
+            if (veiculo.Situacao == "Alugado")
+                throw new Exception("Veículo Indisponível!");
+
+            if (reservaModel.DataFim <= reservaModel.DataInicio)
+                throw new Exception("O período mínimo de reserva é de 1 dia.");
+        }
+
+        private void CriarCadastro(ReservaModel reservaModel, VeiculoModel veiculo, IdentityUser usuario)
+        {
+
+            reservaModel.Id = 0;
+            reservaModel.NomeVeiculo = veiculo.Marca + " - " + veiculo.Modelo;
+            reservaModel.UserNameUsuario = usuario.UserName;
+            reservaModel.Ativo = true;
+            reservaModel.DiasReservados = (reservaModel.DataFim - reservaModel.DataInicio).Days;
+            reservaModel.ValorTotal = reservaModel.DiasReservados * veiculo.ValorDiaria;
+
+            veiculo.Situacao = "Alugado";
+            veiculo.DataFinalAluguel = reservaModel.DataFim;
         }
     }
 }

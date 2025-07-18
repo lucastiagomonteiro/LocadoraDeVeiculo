@@ -1,10 +1,17 @@
 ﻿@model VeiculoModel
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/Alugar.css" />
+    <link rel="stylesheet" href="~/css/ReservaIndex.css" />
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div id="mensagem-sucesso" class="alert alert-success text-center" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
 
 <div class="d-flex justify-content-between align-items-center p-2 alugar-topbar">
     <a asp-controller="Home" asp-action="Index">Voltar</a>
@@ -15,9 +22,7 @@
 
 <div class="alugar-container">
     <div class="alugar-card">
-        <div>
-            <img src="@Model.ImagemUrl" alt="Imagem do Veículo" class="alugar-imagem" />
-        </div>
+        <img src="@Model.ImagemUrl" alt="Imagem do Veículo" class="alugar-imagem" />
 
         <div class="alugar-linha-vertical"></div>
 
@@ -25,10 +30,49 @@
             <h3>@Model.Marca - @Model.Modelo</h3>
             <p><strong>Ano:</strong> @Model.Ano</p>
             <p><strong>Cor:</strong> @Model.Cor</p>
-            <p><strong>Categoria</strong> @Model.Categoria</p>
+            <p><strong>Categoria:</strong> @Model.Categoria</p>
             <p><strong>Preço:</strong> <span style="color:chocolate">R$@Model.ValorDiaria.ToString("f2")</span></p>
-            <p><strong>Situação:</strong> <span style="color: chocolate">@Model.Situacao</span></p>
-            <a class="btn btn-success" asp-controller="Reserva" asp-action="Cadastro" asp-route-id="@Model.id">Alugar</a>
+
+            @if (Model.Situacao == "Alugado")
+            {
+                <p>
+                    <strong>Situação:</strong> <span style="color: red">@Model.Situacao</span> até @Model.DataFinalAluguel.ToString("dd/MM/yyyy")
+                </p>
+            }
+            else
+            {
+                <p><strong>Situação:</strong> <span style="color: green">@Model.Situacao</span></p>
+            }
+
+            <a class="botao-alugar" asp-controller="Reserva" asp-action="Cadastro" asp-route-id="@Model.id">Alugar</a>
         </div>
     </div>
 </div>
+
+<style>
+    #mensagem-sucesso {
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .alugar-topbar a {
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+        .alugar-topbar a:hover {
+            color: #495057;
+            text-decoration: underline;
+        }
+</style>
+
+<script>
+    setTimeout(function () {
+        var msg = document.getElementById('mensagem-sucesso');
+        if (msg) {
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 500); // Remove após fade-out
+        }
+    }, 3000);
+</script>

@@ -2,23 +2,77 @@
 @inject SignInManager<IdentityUser> signInManager
 @inject UserManager<IdentityUser> userManager
 
+<style>
+    .login-partial-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
 
-@if (signInManager.IsSignedIn(User))
-{
-    <ul>
+    .login-button, .login-link {
+        background-color: rgb(42, 68, 103);
+        color: #fff;
+        padding: 8px 16px;
+        margin: 0 6px;
+        border-radius: 20px; /* igual ao header */
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        border: none;
+        font: inherit;
+        cursor: pointer;
+    }
+
+        .login-button:hover, .login-link:hover {
+            background-color: rgb(52, 78, 113); /* mesma cor do hover do header */
+            color: #f0f0f0;
+        }
+
+    .login-partial form {
+        margin: 0;
+    }
+
+    .login-partial a {
+        background-color: rgb(42, 68, 103);
+        color: #fff;
+        padding: 8px 16px;
+        margin: 0 6px;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+    }
+
+        .login-partial a:hover {
+            background-color: rgb(52, 78, 113);
+            color: #f0f0f0;
+        }
+
+    .login-partial button {
+        background-color: rgb(42, 68, 103);
+        color: #fff;
+        padding: 8px 16px;
+        margin: 0 6px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .login-partial button:hover {
+            background-color: rgb(52, 78, 113);
+            color: #f0f0f0;
+        }
+</style>
+
+
+<div class="login-partial">
+    @if (signInManager.IsSignedIn(User))
+    {
         <form method="post" asp-controller="Account" asp-action="Logout">
-            <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">logout @User.Identity.Name</button>
-
+            <button type="submit">Logout @User.Identity?.Name</button>
         </form>
-    </ul>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-black " asp-controller="Account" asp-action="Login">Login</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-black" asp-controller="Account" asp-action="Registrar">Registrar</a>
-    </li>
-
-}
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login">Login</a>
+    }
+</div>

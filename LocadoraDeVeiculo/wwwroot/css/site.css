@@ -1,0 +1,25 @@
+body {
+    background-color: #def2f9;
+}
+
+.custom-header {
+    background: linear-gradient(63.47deg, rgb(0, 19, 32) 0%, rgb(0, 29, 70) 50%, rgb(1, 43, 105) 100%);
+    padding: 15px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+
+.custom-header .navbar-nav .nav-link {
+    background-color: rgb(42, 68, 103);
+    color: #fff;
+    padding: 8px 16px;
+    margin: 0 6px;
+    border-radius: 20px; /* arredondamento dos botões */
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.custom-header .navbar-nav .nav-link:hover {
+    background-color: rgb(52, 78, 113); /* cor ao passar o mouse */
+    color: #f0f0f0;
+}

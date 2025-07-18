@@ -1,28 +1,57 @@
-﻿@model IEnumerable<VeiculoModel>;
+﻿@model IEnumerable<VeiculoModel>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/HomeIndex.css" />
+}
 
 @{
     ViewData["Title"] = "Página Inicial";
 }
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Veículos Disponíveis</h2>
-    <div class="row">
+<div class="pagina-inicial">
 
-        @foreach(var item in Model)
+    <!-- Topo com frase, imagem e campo de busca -->
+    <div class="destaque">
+        <div class="frase-e-pesquisa">
+            <h2 class="frase">
+                Momentos em família começam com a escolha certa.<br />
+                Viaje com conforto, viaje com a <span style="color:blue;">Locavias</span>.
+            </h2>
+            <div class="pesquisa">
+                <input type="text" placeholder="Pesquisar modelo, cor ou categoria..." class="input-pesquisa" />
+            </div>
+        </div>
+
+        <div class="imagem-destaque">
+            <img src="/Imagens/ImagemIndex.png" alt="Família com carro" />
+        </div>
+    </div>
+
+    <!-- Lista de veículos -->
+    <h2 class="titulo-pagina">Veículos Disponíveis</h2>
+
+    <div class="grade-veiculos">
+        @foreach (var item in Model)
         {
-            <div class="col-md-3" >
-                <div class="card mb-2 shadow-sm">
-                    <img src="@item.ImagemUrl" class="card-img-top"  style="width: 100%; height: 150px; object-fit: cover;" alt="Imagem veiculo">
-                    <div class="card-body">
-                        <h5 class="card-title">@Html.DisplayFor(Model => item.Modelo)</h5>
-                        <p class="card-text">@Html.DisplayFor(Model => item.Ano)</p>
-                        <p class="card-text">@Html.DisplayFor(Model => item.Cor)</p>
-                        <p class="card-text">@Html.DisplayFor(Model => item.Categoria)</p>
-                        <p class="card-text"><strong> R$ @Html.DisplayFor(Model => item.ValorDiaria)</strong></p>
-                        <a class="btn btn-primary btn-block" asp-controller="Reserva" asp-action="Index" asp-route-id="@item.id">Alugar</a>
-                    </div>
+            <div class="card-veiculo">
+                <img src="@item.ImagemUrl" alt="Imagem do veículo" class="imagem-veiculo">
+
+                <div class="conteudo-card">
+                    <h3 class="modelo-veiculo">@item.Modelo</h3>
+
+                    <ul class="detalhes-veiculo">
+                        <li>Ano: @item.Ano</li>
+                        <li>Cor: @item.Cor</li>
+                        <li>Categoria: @item.Categoria</li>
+                    </ul>
+
+                    <p class="preco-veiculo">R$ @item.ValorDiaria.ToString("f2") / dia</p>
+
+                    <a href="@Url.Action("Index", "Reserva", new { id = item.id })" class="botao-alugar">Alugar</a>
                 </div>
             </div>
         }
     </div>
 </div>
+
+                    

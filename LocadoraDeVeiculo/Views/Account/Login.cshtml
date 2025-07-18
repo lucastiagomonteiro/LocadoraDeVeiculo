@@ -4,33 +4,99 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+    <p class="lead text-light mb-4"><strong>Bem-vindo de volta! Seu próximo destino está a um clique.</strong></p>
 
-<form asp-action="Login" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-    <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+        <div class="input-wrapper">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+        <div class="input-wrapper">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" placeholder="Digite sua senha" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
 
-    <div class="form-group form-check">
-        <input asp-for="RememberMe" class="form-check-input" />
-        <label asp-for="RememberMe" class="form-check-label"></label>
-    </div>
+        <!-- Linha inferior com flex: lembrar-me à esquerda, resto à direita -->
+        <div class="form-footer d-flex justify-content-between align-items-center flex-wrap mt-4">
+            <!-- Lembrar-me -->
+            <div class="form-check mb-2">
+                <input asp-for="RememberMe" class="form-check-input" />
+                <label asp-for="RememberMe" class="form-check-label text-light"></label>
+            </div>
 
-    <button type="submit" class="btn btn-primary">Entrar</button>
-</form>
+            <!-- Link + Botão -->
+            <div class="d-flex gap-3 align-items-center">
+                <span class="text-light">Ainda não possui conta?</span>
+                <a asp-controller="Account" asp-action="Registrar" class="btn btn-outline-light btn-sm">
+                    Fazer Cadastro
+                </a>
+               
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary  btn-block mt-4">Entrar</button>
+    </form>
+</div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    .container {
+        background-color: #1c3758;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        max-width: 600px; /* Limita largura */
+        margin: auto; /* Centraliza */
+    }
+
+    .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px; /* menor espaço entre itens */
+    }
+
+    .btn-primary {
+        background-color: #2a4467;
+        border-color: #2a4467;
+        font-size: 1rem;
+        padding: 8px 20px; /* menor que antes */
+        white-space: nowrap;
+    }
+
+    .btn-outline-light {
+        border: 1px solid #cbd6e2;
+        color: #cbd6e2;
+        padding: 6px 12px;
+        white-space: nowrap;
+    }
+
+        .btn-outline-light:hover {
+            background-color: #36557e;
+            color: white;
+            border-color: #36557e;
+        }
+
+    .btn-block {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 1.1rem;
+    }
+
+
+
+</style>
