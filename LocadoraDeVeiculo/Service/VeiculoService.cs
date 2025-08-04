@@ -19,15 +19,22 @@ namespace LocadoraDeVeiculo.Service
         {
             return await _context.Veiculos.FirstOrDefaultAsync(v => v.id == id);
         }
-
         public async Task CriarVeiculo(VeiculoModel model, IFormFile ImagemUpload)
-        {   
+        {
+            if (ImagemUpload != null && ImagemUpload.Length > 0)
+            {
+                model.ImagemUrl = await AddImagemVeiculo(ImagemUpload);
+            }
+            else
+            {
+                // Se a imagem for obrigatória, pode lançar exceção ou adicionar erro antes no controller
+                model.ImagemUrl = null; // ou caminho padrão, se quiser
+            }
 
-            model.ImagemUrl = await AddImagemVeiculo(model, ImagemUpload);
             await _context.Veiculos.AddAsync(model);
             await _context.SaveChangesAsync();
-
         }
+
 
         public async Task ApagarVeiculo(int id)
         {
@@ -39,29 +46,27 @@ namespace LocadoraDeVeiculo.Service
             }
         }
 
-        public async Task EditarVeiculo(int id, VeiculoModel model, IFormFile ImagemUpload)
+        public async Task EditarVeiculo(int id, VeiculoModel model)
         {
             var veiculoExistente = await _context.Veiculos.FindAsync(id);
-            if (veiculoExistente != null)
+            if (veiculoExistente == null) return;
+
+            veiculoExistente.Placa = model.Placa;
+            veiculoExistente.Marca = model.Marca;
+            veiculoExistente.Modelo = model.Modelo;
+            veiculoExistente.Ano = model.Ano;
+            veiculoExistente.Cor = model.Cor;
+            veiculoExistente.Categoria = model.Categoria;
+            veiculoExistente.Situacao = model.Situacao;
+            veiculoExistente.ValorDiaria = model.ValorDiaria;
+
+            if (model.ImagemUpload != null && model.ImagemUpload.Length > 0)
             {
-                // Atualiza os campos normais
-                veiculoExistente.Placa = model.Placa;
-                veiculoExistente.Marca = model.Marca;
-                veiculoExistente.Modelo = model.Modelo;
-                veiculoExistente.Ano = model.Ano;
-                veiculoExistente.Cor = model.Cor;
-                veiculoExistente.Categoria = model.Categoria;
-                veiculoExistente.Situacao = model.Situacao;
-                veiculoExistente.ValorDiaria = model.ValorDiaria;
-
-                if(ImagemUpload != null && ImagemUpload.Length > 0)
-                {
-                    veiculoExistente.ImagemUrl = await AddImagemVeiculo(model, ImagemUpload);              
-                }
-
-                _context.Veiculos.Update(veiculoExistente);
-                await _context.SaveChangesAsync();
+                veiculoExistente.ImagemUrl = await AddImagemVeiculo(model.ImagemUpload);
             }
+
+            _context.Veiculos.Update(veiculoExistente);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<VeiculoModel>> ListVeiculo()
@@ -80,29 +85,30 @@ namespace LocadoraDeVeiculo.Service
                 ImagemUrl = x.ImagemUrl
             }).ToListAsync();
         }
-
-        public async Task<string> AddImagemVeiculo(VeiculoModel model, IFormFile ImagemUpload)
+        public async Task<string?> AddImagemVeiculo(IFormFile ImagemUpload)
         {
             if (ImagemUpload != null && ImagemUpload.Length > 0)
             {
                 var nomeImagem = Guid.NewGuid().ToString() + Path.GetExtension(ImagemUpload.FileName);
-                var caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens", nomeImagem);
-
                 var pastaImagens = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Imagens");
+
                 if (!Directory.Exists(pastaImagens))
                 {
                     Directory.CreateDirectory(pastaImagens);
                 }
+
+                var caminhoImagem = Path.Combine(pastaImagens, nomeImagem);
 
                 using (var stream = new FileStream(caminhoImagem, FileMode.Create))
                 {
                     await ImagemUpload.CopyToAsync(stream);
                 }
 
-                return "/Imagens/" + nomeImagem;
+                return "/Imagens/" + nomeImagem; // caminho relativo para salvar no banco
             }
 
             return null;
         }
+
     }
 }

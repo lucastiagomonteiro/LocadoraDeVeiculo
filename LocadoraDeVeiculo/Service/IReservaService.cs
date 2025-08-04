@@ -9,5 +9,6 @@ namespace LocadoraDeVeiculo.Service
         Task<ResultadoOperacaoDTO> CadastrarReserva(ReservaModel reservaModel, ClaimsPrincipal userPrincipal);
         List<ReservaModelDTO> HistoricoReserva(string userName);
         Task DesativandoReservasVencidas();
+        Task AtualizarSituacaoVeiculos();
     }
 }

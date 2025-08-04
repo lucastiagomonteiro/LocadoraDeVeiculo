@@ -35,5 +35,9 @@ namespace LocadoraDeVeiculo.Models
         [NotMapped]
         public DateTime DataFinalAluguel { get; set; }
 
+        [NotMapped]
+        public IFormFile? ImagemUpload { get; set; }
+
+
     }
 }

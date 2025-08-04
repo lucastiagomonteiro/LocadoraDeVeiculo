@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace LocadoraDeVeiculo.Service
 {
@@ -28,7 +29,7 @@ namespace LocadoraDeVeiculo.Service
 
             try
             {
-                ValidarCadastro(veiculo, usuario, reservaModel);
+               await ValidarCadastro(veiculo, usuario, reservaModel);
             }
             catch (Exception ex)
             {
@@ -80,7 +81,7 @@ namespace LocadoraDeVeiculo.Service
                     var veiculo = veiculos.FirstOrDefault(v => v.Situacao == "Alugado" && v.id == item.IdVeiculo);
                     if (veiculo != null)
                     {
-                        
+
                         veiculo.Situacao = "Disponível";
                     }
                 }
@@ -89,7 +90,38 @@ namespace LocadoraDeVeiculo.Service
             await _context.SaveChangesAsync();
         }
 
-        private void ValidarCadastro(VeiculoModel veiculo, IdentityUser usuario, ReservaModel reservaModel)
+        public async Task AtualizarSituacaoVeiculos()
+        {
+            var veiculos = await _context.Veiculos.ToListAsync();
+
+            foreach (var veiculo in veiculos)
+            {
+                var reservasAtivas = await _context.Reservas
+                    .Where(r => r.IdVeiculo == veiculo.id && r.Ativo)
+                    .ToListAsync();
+
+                var agora = DateTime.Now;
+
+                // Se existe uma reserva que está acontecendo agora
+                if (reservasAtivas.Any(r => r.DataInicio <= agora && r.DataFim >= agora))
+                {
+                    veiculo.Situacao = "Alugado";
+                }
+                // Se existe uma reserva futura
+                else if (reservasAtivas.Any(r => r.DataInicio > agora))
+                {
+                    veiculo.Situacao = "Reservado";
+                }
+                else
+                {
+                    veiculo.Situacao = "Disponível";
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task ValidarCadastro(VeiculoModel veiculo, IdentityUser usuario, ReservaModel reservaModel)
         {
             if (veiculo == null || usuario == null)
                 throw new Exception("Veículo não encontrado ou usuário inválido.");
@@ -99,11 +131,21 @@ namespace LocadoraDeVeiculo.Service
 
             if (reservaModel.DataFim <= reservaModel.DataInicio)
                 throw new Exception("O período mínimo de reserva é de 1 dia.");
+
+            var reservaExistente = await _context.Reservas.Where(r => r.IdVeiculo == veiculo.id && r.Ativo == true).ToListAsync();
+
+            foreach (var reservaFuturas in reservaExistente)
+            {
+                if((reservaFuturas.DataInicio - reservaModel.DataFim).TotalDays < 2 || reservaModel.DataFim == reservaFuturas.DataInicio)
+                {
+                    throw new Exception("Esse veiculo já está reservado, deve haver pelo menos um intervalo de dois dias " + reservaFuturas.DataInicio.ToString("dd/MM/yyyy"));
+                }
+            }
+
         }
 
         private void CriarCadastro(ReservaModel reservaModel, VeiculoModel veiculo, IdentityUser usuario)
         {
-
             reservaModel.Id = 0;
             reservaModel.NomeVeiculo = veiculo.Marca + " - " + veiculo.Modelo;
             reservaModel.UserNameUsuario = usuario.UserName;
@@ -111,7 +153,6 @@ namespace LocadoraDeVeiculo.Service
             reservaModel.DiasReservados = (reservaModel.DataFim - reservaModel.DataInicio).Days;
             reservaModel.ValorTotal = reservaModel.DiasReservados * veiculo.ValorDiaria;
 
-            veiculo.Situacao = "Alugado";
             veiculo.DataFinalAluguel = reservaModel.DataFim;
         }
     }

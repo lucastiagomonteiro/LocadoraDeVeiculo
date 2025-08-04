@@ -22,10 +22,10 @@
         cursor: pointer;
     }
 
-        .login-button:hover, .login-link:hover {
-            background-color: rgb(52, 78, 113); /* mesma cor do hover do header */
-            color: #f0f0f0;
-        }
+    .login-button:hover, .login-link:hover {
+        background-color: rgb(52, 78, 113); /* mesma cor do hover do header */
+        color: #f0f0f0;
+    }
 
     .login-partial form {
         margin: 0;
@@ -37,14 +37,14 @@
         padding: 8px 16px;
         margin: 0 6px;
         border-radius: 20px;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease;  
         text-decoration: none;
     }
 
-        .login-partial a:hover {
-            background-color: rgb(52, 78, 113);
-            color: #f0f0f0;
-        }
+    .login-partial a:hover {
+        background-color: rgb(52, 78, 113);
+        color: #f0f0f0;
+    }
 
     .login-partial button {
         background-color: rgb(42, 68, 103);
@@ -57,22 +57,46 @@
         transition: background-color 0.3s ease;
     }
 
-        .login-partial button:hover {
-            background-color: rgb(52, 78, 113);
-            color: #f0f0f0;
-        }
+    .login-partial button:hover {
+        background-color: rgb(52, 78, 113);
+        color: #f0f0f0;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+        color: white;
+    }
+
 </style>
 
 
-<div class="login-partial">
-    @if (signInManager.IsSignedIn(User))
+
+@{
+    var user = signInManager.IsSignedIn(User)
+        ? await userManager.GetUserAsync(User)
+        : null;
+}
+
+<div class="login-partial-container d-flex align-items-center">
+    @if (user != null)
     {
-        <form method="post" asp-controller="Account" asp-action="Logout">
-            <button type="submit">Logout @User.Identity?.Name</button>
+       
+        <span class="user-info">
+            <i class="fas fa-user"></i>
+            @user.UserName
+        </span>
+        <form method="post" asp-controller="Account" asp-action="Logout" class="m-0">
+            <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
         </form>
     }
     else
     {
-        <a asp-controller="Account" asp-action="Login">Login</a>
+        <a class="nav-link text-white fs-5" asp-controller="Account" asp-action="Login" title="Fazer login">
+            <i class="fas fa-user"></i>
+        </a>
     }
 </div>
+

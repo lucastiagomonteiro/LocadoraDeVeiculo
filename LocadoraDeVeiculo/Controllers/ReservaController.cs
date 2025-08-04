@@ -20,8 +20,10 @@ namespace LocadoraDeVeiculo.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
-
             await _reservaService.DesativandoReservasVencidas();
+            await _reservaService.AtualizarSituacaoVeiculos();
+
+
             var pegandoId = _veiculoService.BuscarPorId(id).Result;
             if (pegandoId == null)
             {

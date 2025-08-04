@@ -1,48 +1,132 @@
 ﻿@model IEnumerable<VeiculoModel>;
 
-<div>
-    <a class="btn btn-success" asp-controller="Veiculo" asp-action="Criar">Adicionar usuario</a>
+<div class="container-crud">
+    <a class="btn btn-success" asp-controller="Veiculo" asp-action="Criar">Adicionar usuário</a>
+
+    <div class="table-responsive-wrapper">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Ano</th>
+                    <th scope="col">Cor</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Valor Diária</th>
+                    <th scope="col">Imagem</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(model => item.Placa)</td>
+                        <td>@Html.DisplayFor(model => item.Marca)</td>
+                        <td>@Html.DisplayFor(model => item.Modelo)</td>
+                        <td>@Html.DisplayFor(model => item.Ano)</td>
+                        <td>@Html.DisplayFor(model => item.Cor)</td>
+                        <td>@Html.DisplayFor(model => item.Categoria)</td>
+                        <td>@Html.DisplayFor(model => item.Situacao)</td>
+                        <td>@Html.DisplayFor(model => item.ValorDiaria)</td>
+                        <td>
+                            <img src="@item.ImagemUrl" alt="Imagem do Veículo" style="max-width: 100px; max-height: 100px;" />
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="Veiculo" asp-action="Editar" asp-route-id="@item.id">Editar</a>
+                            <form method="post" asp-controller="Veiculo" asp-action="Apagar" asp-route-id="@item.id" style="display:inline;">
+                                <button class="btn btn-danger" onclick="return confirm('Tem certeza que deseja apagar esse cadastro?')">Apagar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<style>
+    .container-crud {
+        margin:0 auto;
+        background-color: #1c3758;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        max-width: 1200px;
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Placa</th>
-            <th scope="col">Marcar</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Ano</th>
-            <th scope="col">Cor</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Situação</th>
-            <th scope="col">ValorDiaria</th>
-            <th scope="col"> confia</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <th scope="row">@Html.DisplayFor(Model => item.Placa)</th>
-                <th scope="row">@Html.DisplayFor(Model => item.Marca)</th>
-                <th scope="row">@Html.DisplayFor(model => item.Modelo)</th>
-                <th scope="row">@Html.DisplayFor(Model => item.Ano)</th>
-                <th scope="row">@Html.DisplayFor(Model => item.Cor)</th>
-                <th scope="row">@Html.DisplayFor(Model => item.Categoria)</th>
-                <th scope="row">@Html.DisplayFor(Model => item.Situacao)</th>
-                <th scope="row">@Html.DisplayFor(Model => item.ValorDiaria)</th>
-                <th scope="row">
-                    <img src="@item.ImagemUrl" alt="Imagem do Veículo" style="max-width: 100px; max-height: 100px;" />
-                </th>
+    .table {
+        color: white;
+        background-color: #2a4467;
+        border-radius: 10px;
+        overflow: hidden;
+    }
 
-                <th>
-                    <a class="btn btn-primary" asp-controller="Veiculo" asp-action="Editar" asp-route-id="@item.id">Editar</a>
-                    <form method="post" asp-controller="veiculo" asp-action="Apagar" style="display:inline;">
-                        <button class="btn btn-danger" asp-controller="Veiculo" asp-action="Apagar" asp-route-id="@item.id" onclick="return confirm('Tem certeza que deseja apagar esse cadastro?')">Apagar</button>
-                    </form>
-                    
-                <th />
-            </tr>
-        }
-    </tbody>
-</table>
+    .table-responsive-wrapper {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+        color: white;
+    }
+
+    .table thead {
+        background-color: #1c3758;
+        color: white;
+    }
+
+    .table tbody tr {
+        background-color: #2a4467;
+        color: white;
+    }
+
+    .table tbody tr:hover {
+        background-color: #36557e;
+    }
+
+    .btn-primary {
+        background-color: #2a4467;
+        border-color: #2a4467;
+        font-size: 1rem;
+        padding: 8px 20px;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #c82333;
+        border-color: #bd2130;
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #218838;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    img {
+        border-radius: 5px;
+        border: 1px solid #cbd6e2;
+    }
+
+    a, label, input, select, textarea {
+        color: white;
+    }
+
+    input, select, textarea {
+        background-color: #2a4467;
+        border: 1px solid #cbd6e2;
+    }
+</style>

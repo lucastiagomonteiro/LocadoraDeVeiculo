@@ -8,6 +8,6 @@ namespace LocadoraDeVeiculo.Service
         Task CriarVeiculo(VeiculoModel model, IFormFile ImagemUpload);
         Task<VeiculoModel> BuscarPorId(int id);
         Task ApagarVeiculo(int id);
-        Task EditarVeiculo(int id, VeiculoModel model, IFormFile Imageupload);
+        Task EditarVeiculo(int id, VeiculoModel model);
     }
 }

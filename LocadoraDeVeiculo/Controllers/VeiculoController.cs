@@ -30,7 +30,6 @@ namespace LocadoraDeVeiculo.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Criar(VeiculoModel model, IFormFile ImagemUpload)
         {
@@ -39,9 +38,16 @@ namespace LocadoraDeVeiculo.Controllers
                 return View(model);
             }
 
+            if (ImagemUpload == null || ImagemUpload.Length == 0)
+            {
+                ModelState.AddModelError("ImagemUpload", "A imagem do veículo é obrigatória.");
+                return View(model);
+            }
+
             await _veiculoService.CriarVeiculo(model, ImagemUpload);
             return RedirectToAction("Index", "Veiculo");
         }
+
 
         [Authorize(Roles = "Admin, Employee")]
         [HttpGet]
@@ -58,15 +64,14 @@ namespace LocadoraDeVeiculo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(int id, VeiculoModel model, IFormFile ImagemUpload)
+        [HttpPost]
+        public async Task<IActionResult> Editar(int id, VeiculoModel model)
         {
-            if(ModelState.IsValid)
-            {
-                await _veiculoService.EditarVeiculo(id, model, ImagemUpload);
-                return RedirectToAction(nameof(Index));
-            }
-            
-            return NotFound();
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await _veiculoService.EditarVeiculo(id, model);
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = "Admin, Employee")]
