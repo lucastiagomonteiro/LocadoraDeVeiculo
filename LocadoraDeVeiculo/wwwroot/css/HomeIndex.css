@@ -9,7 +9,7 @@
 
 .destaque {
     display: flex;
-    justify-content: flex-start; /* Alinha à esquerda */
+    justify-content: flex-start; 
     align-items: center;
     gap: 40px;
     margin-bottom: 60px;
@@ -19,7 +19,7 @@
     background: linear-gradient(63.47deg, rgb(0, 19, 32) 0%, rgb(0, 29, 70) 50%, rgb(39 66 104) 100%);
     color: white;
     margin-top: -24px;
-    padding: 20px 40px; /* Adiciona espaçamento lateral */
+    padding: 20px 40px;
 }
 
 .pesquisa {
@@ -123,11 +123,10 @@
     transition: background-color 0.3s ease;
 }
 
-    .botao-alugar:hover {
-        background-color: #1f6391;
-    }
+.botao-alugar:hover {
+    background-color: #1f6391;
+}
 
-/* Responsivo */
 @media (max-width: 768px) {
     .destaque {
         flex-direction: column;

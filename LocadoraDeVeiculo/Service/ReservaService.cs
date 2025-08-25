@@ -21,7 +21,7 @@ namespace LocadoraDeVeiculo.Service
             _context = Context;
             _user = User;
         }
-
+        
         public async Task<ResultadoOperacaoDTO> CadastrarReserva(ReservaModel reservaModel, ClaimsPrincipal userPrincipal)
         {
             var veiculo = await _context.Veiculos.FindAsync(reservaModel.IdVeiculo);
@@ -138,7 +138,7 @@ namespace LocadoraDeVeiculo.Service
             {
                 if((reservaFuturas.DataInicio - reservaModel.DataFim).TotalDays < 2 || reservaModel.DataFim == reservaFuturas.DataInicio)
                 {
-                    throw new Exception("Esse veiculo já está reservado, deve haver pelo menos um intervalo de dois dias " + reservaFuturas.DataInicio.ToString("dd/MM/yyyy"));
+                    throw new Exception("Esse veiculo já está reservado, deve haver pelo menos um intervalo de dois dias antes" + reservaFuturas.DataInicio.ToString("dd/MM/yyyy"));
                 }
             }
 
@@ -152,8 +152,6 @@ namespace LocadoraDeVeiculo.Service
             reservaModel.Ativo = true;
             reservaModel.DiasReservados = (reservaModel.DataFim - reservaModel.DataInicio).Days;
             reservaModel.ValorTotal = reservaModel.DiasReservados * veiculo.ValorDiaria;
-
-            veiculo.DataFinalAluguel = reservaModel.DataFim;
         }
     }
 }

@@ -15,11 +15,11 @@
 
 <div class="container">
 
-    <div class="d-flex justify-content-between align-items-center p-2 alugar-topbar">
-        <a asp-controller="Home" asp-action="Index">Voltar</a>
-        <button>
-            <i class="fa-regular fa-heart"></i> Favoritar
-        </button>
+    <div class="d-flex justify-content-between align-items-center p-2 alugar-topbar ">
+        <a asp-controller="Home" asp-action="Index" class="text-secondary">Voltar</a>
+        @* <button> *@
+        @*     <i class="fa-regular fa-heart"></i> Favoritar *@
+        @* </button> *@
     </div>
 
     <div class="alugar-container">
@@ -38,7 +38,7 @@
                 @if (Model.Situacao == "Alugado")
                 {
                     <p>
-                        <strong>Situação:</strong> <span style="color: red">@Model.Situacao</span> até @Model.DataFinalAluguel.ToString("dd/MM/yyyy")
+                        <strong>Situação:</strong> <span style="color: red">@Model.Situacao</span>
                     </p>
                 }
                 else

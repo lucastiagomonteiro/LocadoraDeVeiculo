@@ -15,18 +15,18 @@
         <div class="frase-e-pesquisa">
             <h2 class="frase">
                 Momentos em família começam com a escolha certa.<br />
-                Viaje com conforto, viaje com a <span style="color:blue;">Locavias</span>.
+                Viaje com conforto, viaje com a <span style="color:blue;">LocaVias</span>.
             </h2>
             <div class="pesquisa">
-                <input type="text" placeholder="Pesquisar modelo, cor ou categoria..." class="input-pesquisa" />
+                <input type="text" id="filtro" placeholder="Pesquisar modelo ou categoria" class="input-pesquisa" />
             </div>
         </div>
     </div>
 
     <!-- Lista de veículos -->
-    <h2 class="titulo-pagina">Veículos Disponíveis</h2>
+    <h2 class="titulo-pagina">Veículos</h2>
 
-    <div class="grade-veiculos">
+    <div id="lista-veiculos" class="grade-veiculos">
         @foreach (var item in Model)
         {
             <div class="card-veiculo">
@@ -48,6 +48,28 @@
             </div>
         }
     </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("filtro").addEventListener("keyup", function () {
+            let valor = this.value;
+
+            fetch(`/Home/Index?filtro=${valor}`, {
+                method: "GET"
+            })
+            .then(response => response.text())
+            .then(html => {
+                // Pegar apenas o conteúdo da lista (sem recarregar toda a página)
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(html, "text/html");
+                let novaLista = doc.querySelector("#lista-veiculos").innerHTML;
+
+                document.querySelector("#lista-veiculos").innerHTML = novaLista;
+            });
+        });
+    </script>
+}
 
                     

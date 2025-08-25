@@ -15,6 +15,7 @@ namespace LocadoraDeVeiculo.Service
         }
         public async Task  SeedRoleAsync()
         {
+            
             if(!await _roleManager.RoleExistsAsync("Customer"))
             {
                 IdentityRole role = new IdentityRole();

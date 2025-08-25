@@ -16,7 +16,7 @@ namespace LocadoraDeVeiculo.Controllers
             _veiculoService = veiculoService;
             _reservaService = reservaService;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
@@ -47,15 +47,18 @@ namespace LocadoraDeVeiculo.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastro(ReservaModel reservaModel)
         {
+
             var resultado = await _reservaService.CadastrarReserva(reservaModel,User);
+
             if (resultado.Sucesso == false)
             {
                 TempData["MensagemErro"] = resultado.Mensagem;
-                return View(); //de uma olhada, ser vai ser so na view, ou vai para tela de login para efetuar o login 
+                return View(); 
             }
 
             TempData["MensagemSucesso"] = resultado.Mensagem;
             return RedirectToAction(nameof(Index), new { id = reservaModel.IdVeiculo });
+
         }
 
         [HttpGet]

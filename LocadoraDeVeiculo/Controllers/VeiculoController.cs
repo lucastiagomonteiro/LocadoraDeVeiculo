@@ -87,16 +87,5 @@ namespace LocadoraDeVeiculo.Controllers
             return NotFound();
         }
          
-        //[HttpGet]
-        //public IActionResult Alugar(int id)
-        //{
-        //    var pegandoId = _veiculoService.BuscarPorId(id).Result;
-        //    if (pegandoId == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(pegandoId);
-        //}
     }
 }

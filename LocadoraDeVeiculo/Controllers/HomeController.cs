@@ -15,9 +15,18 @@ namespace LocadoraDeVeiculo.Controllers
             _veiculoService = veiculoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filtro)
         {
             var lista = await _veiculoService.ListVeiculo();
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                lista = lista
+                    .Where(v => v.Modelo.Contains(filtro, StringComparison.OrdinalIgnoreCase)
+                             || v.Categoria.Contains(filtro, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
             return View(lista);
         }
 
