@@ -27,8 +27,7 @@ namespace LocadoraDeVeiculo.Service
             }
             else
             {
-                // Se a imagem for obrigatória, pode lançar exceção ou adicionar erro antes no controller
-                model.ImagemUrl = null; // ou caminho padrão, se quiser
+                model.ImagemUrl = null;
             }
 
             await _context.Veiculos.AddAsync(model);

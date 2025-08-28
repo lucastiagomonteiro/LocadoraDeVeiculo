@@ -35,22 +35,53 @@
     }
 
     .reserva-card p {
-         margin: 5px 0;
+        margin: 5px 0;
         color: #444;
     }
 </style>
 <div class="historico-container">
     <h2>Histórico de Reservas</h2>
+        @foreach (var item in Model)
+        {
+            string borderColor = item.StatusReserva switch
+            {
+                "Alugado" => "red",
+                "Reservado" => "chocolate",
+                "Finalizada" => "green",
+                _ => "#007BFF"
+            };
 
-    @foreach (var item in Model)
-    {
-        <div class="reserva-card">
-            <h3>@item.NomeVeiculo</h3>
-            <p><strong>Data de Início:</strong> @item.DataInicio</p>
-            <p><strong>Data de Fim:</strong> @item.DataFim</p>
-            <p><strong>Dias Reservados:</strong> @item.DiasReservados</p>
-            <p><strong>Valor Total:</strong> R$ @item.ValorTotal</p>
-        </div>
-    }
+            <div class="reserva-card p-3 mb-3 rounded" style="border-left: 6px solid @borderColor;">
+                <h3>@item.NomeVeiculo</h3>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <p><strong>Usuário:</strong> @item.UserNameUsuario</p>
+                }
+
+                <p><strong>Data de Início:</strong> @item.DataInicio.ToString("dd/MM/yyyy")</p>
+                <p><strong>Data de Fim:</strong> @item.DataFim.ToString("dd/MM/yyyy")</p>
+                <p><strong>Dias Reservados:</strong> @item.DiasReservados</p>
+                <p><strong>Valor Total:</strong> R$ @item.ValorTotal.ToString("f2")</p>
+
+                <p>
+                    <strong>Status:
+                    @if (item.StatusReserva == "Alugado")
+                    {
+                        <span class="text-danger">@item.StatusReserva</span>
+                    }
+                    else if (item.StatusReserva == "Reservado")
+                    {
+                        <span style="color:chocolate;">@item.StatusReserva</span>
+                    }
+                    else if (item.StatusReserva == "Finalizada")
+                    {
+                        <span class="text-success">@item.StatusReserva</span>
+                    }
+                    </strong>
+                </p>
+            </div>
+        }
+    
 </div>
 

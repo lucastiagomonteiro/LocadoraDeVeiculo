@@ -52,18 +52,30 @@ namespace LocadoraDeVeiculo.Service
             };
         }
 
-        public List<ReservaModelDTO> HistoricoReserva(string userName)
+        public List<ReservaModelDTO> HistoricoReserva(string userName, bool isAdmin)
         {
-            return _context.Reservas
-                .Where(r => r.UserNameUsuario == userName)
+            var query = _context.Reservas.AsQueryable();
+
+            if (isAdmin)
+            {
+                
+                query = query.Where(r => r.Ativo);
+            }
+            else
+            {
+                query = query.Where(r => r.UserNameUsuario == userName);
+            }
+
+            return query
                 .Select(r => new ReservaModelDTO
                 {
                     IdVeiculo = r.IdVeiculo,
                     NomeVeiculo = r.NomeVeiculo,
+                    UserNameUsuario = r.UserNameUsuario, 
                     DataInicio = r.DataInicio,
                     DataFim = r.DataFim,
                     DiasReservados = r.DiasReservados,
-                    ValorTotal = r.ValorTotal
+                    ValorTotal = r.ValorTotal,
                 })
                 .ToList();
         }
@@ -102,12 +114,12 @@ namespace LocadoraDeVeiculo.Service
 
                 var agora = DateTime.Now;
 
-                // Se existe uma reserva que está acontecendo agora
+                
                 if (reservasAtivas.Any(r => r.DataInicio <= agora && r.DataFim >= agora))
                 {
                     veiculo.Situacao = "Alugado";
                 }
-                // Se existe uma reserva futura
+                
                 else if (reservasAtivas.Any(r => r.DataInicio > agora))
                 {
                     veiculo.Situacao = "Reservado";

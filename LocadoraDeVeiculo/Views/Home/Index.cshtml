@@ -10,7 +10,7 @@
 
 <div class="pagina-inicial">
 
-    <!-- Topo com frase, imagem e campo de busca -->
+   
     <div class="destaque">
         <div class="frase-e-pesquisa">
             <h2 class="frase">
@@ -23,7 +23,6 @@
         </div>
     </div>
 
-    <!-- Lista de veículos -->
     <h2 class="titulo-pagina">Veículos</h2>
 
     <div id="lista-veiculos" class="grade-veiculos">
@@ -61,7 +60,6 @@
             })
             .then(response => response.text())
             .then(html => {
-                // Pegar apenas o conteúdo da lista (sem recarregar toda a página)
                 let parser = new DOMParser();
                 let doc = parser.parseFromString(html, "text/html");
                 let novaLista = doc.querySelector("#lista-veiculos").innerHTML;

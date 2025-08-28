@@ -61,13 +61,15 @@ namespace LocadoraDeVeiculo.Controllers
 
         }
 
+
         [HttpGet]
-        public IActionResult Historico()
+        public async Task<IActionResult> Historico()
         {
-            var userName = User.Identity.Name;
-            var historico = _reservaService.HistoricoReserva(userName);
+            var userName = User.Identity?.Name;
+            bool isAdmin = User.IsInRole("Admin");
+
+            var historico = _reservaService.HistoricoReserva(userName, isAdmin);
             return View(historico);
         }
-
     }
 }
